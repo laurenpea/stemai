@@ -1,0 +1,27 @@
+{
+  "buildDate": "2026-11-14",
+  "acsYear": 2024,
+  "gazetteerYear": 2026,
+  "rawTeams": 9483,
+  "finalPrograms": 5663,
+  "duplicatesRemoved": 0,
+  "dropped": {
+    "total": 3820,
+    "placeholderOrEmptyRow": 0,
+    "outsideUs": 2379,
+    "noUsableStateCode": 78,
+    "noUsableLocation": 1363
+  },
+  "geocodedExact": 0,
+  "geocodedZipCenter": 5663,
+  "withDemographics": 5662,
+  "withDemographicsPct": 100,
+  "programTypes": [
+    "FIRST Robotics (FRC)"
+  ],
+  "sources": {
+    "programs": "https://www.thebluealliance.com/apidocs/v3",
+    "demographics": "https://www.census.gov/data/developers/data-sets/acs-5year.html (ACS 5-year 2024, ZCTA level)",
+    "geocoding": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html (2026 ZCTA gazetteer)"
+  }
+}
