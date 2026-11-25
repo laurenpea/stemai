@@ -1,0 +1,27 @@
+{
+  "buildDate": "2026-11-25",
+  "acsYear": 2024,
+  "gazetteerYear": 2026,
+  "seasonKept": "2025-26 competitors and 2026-27 rookies",
+  "rawTeams": 11101,
+  "finalPrograms": 6066,
+  "duplicatesRemoved": 0,
+  "dropped": {
+    "total": 5035,
+    "outsideUs": 99,
+    "noUsableStateCode": 24,
+    "notActive": 4682,
+    "cityNotFound": 230
+  },
+  "geocodedCityCenter": 6066,
+  "withDemographics": 6066,
+  "withDemographicsPct": 100,
+  "programTypes": [
+    "FIRST Tech Challenge (FTC)"
+  ],
+  "sources": {
+    "programs": "https://ftcscout.org/api",
+    "demographics": "https://www.census.gov/data/developers/data-sets/acs-5year.html (ACS 5-year 2024, ZCTA level)",
+    "geocoding": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html (2026 place, county subdivision and ZCTA gazetteers)"
+  }
+}
