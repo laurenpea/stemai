@@ -32,8 +32,16 @@ export default function Context() {
           mentors, build a robot for a new game each season and compete at
           regional and championship events. Teams register with FIRST each
           season and their information is published through The Blue Alliance,
-          which is where our program locations come from. FRC is the only
-          program type in the map right now.
+          which is where our FRC locations come from.
+        </p>
+        <h3>FIRST Tech Challenge</h3>
+        <p>
+          FTC is also run by FIRST, for students in grades 7 to 12. Teams are
+          smaller than FRC teams and build smaller robots from a reusable kit,
+          so an FTC team costs less to start and is common at middle schools,
+          community groups and home school groups as well as high schools. Our
+          FTC locations come from FTCScout, which republishes the official
+          team list.
         </p>
         <h3>Project Lead The Way</h3>
         <p>
@@ -42,7 +50,8 @@ export default function Context() {
           robotics team, PLTW is coursework that a school adopts, so its
           footprint looks different from a club or competition team.{' '}
           <strong>
-            PLTW is not in the map yet. Neither is any other program type.
+            PLTW is not in the map yet. Neither is any other program type
+            beyond FRC and FTC.
           </strong>{' '}
           Adding PLTW is the next thing we plan to do.
         </p>
@@ -54,27 +63,27 @@ export default function Context() {
           <li>
             <a href="https://www.firstinspires.org/team-event-search" target="_blank" rel="noreferrer">
               FIRST team and event search
-            </a>{' '}
+            <span className="srOnly"> (opens in a new tab)</span></a>{' '}
             and{' '}
             <a href="https://www.thebluealliance.com/" target="_blank" rel="noreferrer">
               The Blue Alliance
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             . Both let you look up FIRST teams, and The Blue Alliance is the
-            source of our team data. They are built for finding and following
+            source of our FRC team data. They are built for finding and following
             teams, so they do not show demographic data for the area around a
             team.
           </li>
           <li>
             <a href="https://www.pltw.org/school-locator" target="_blank" rel="noreferrer">
               PLTW School Locator
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             . Lets you search for schools that offer PLTW programs. It is a
             search tool rather than a dataset, and there is no bulk download.
           </li>
           <li>
             <a href="https://nces.ed.gov/" target="_blank" rel="noreferrer">
               National Center for Education Statistics
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             . The main federal source for school and district data, including
             enrollment and school characteristics. It is thorough but it does
             not track out of school programs like robotics teams.
@@ -82,7 +91,7 @@ export default function Context() {
           <li>
             <a href="https://datacatalog.urban.org/" target="_blank" rel="noreferrer">
               Urban Institute data catalog
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             . Publishes cleaned education and community datasets and tools built
             on them. Again the focus is schools and districts rather than
             specific STEM programs.
@@ -90,7 +99,7 @@ export default function Context() {
           <li>
             <a href="https://civilrightsdata.ed.gov/" target="_blank" rel="noreferrer">
               Civil Rights Data Collection
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             . Shows which courses schools offer, broken out by student group.
             It covers courses inside school, not outside programs.
           </li>
@@ -116,7 +125,7 @@ export default function Context() {
       <section>
         <h2>What this prototype is not</h2>
         <ul>
-          <li>It is not a complete list of STEM programs. It is FRC teams only so far.</li>
+          <li>It is not a complete list of STEM programs. It is FRC and FTC teams only so far.</li>
           <li>It is not a ranking or a score for any place.</li>
           <li>
             It does not claim a cause. We show the data next to each other and

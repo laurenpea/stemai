@@ -2,12 +2,18 @@ import { useEffect, useState } from 'react'
 
 export default function Methodology() {
   const [report, setReport] = useState(null)
+  const [ftc, setFtc] = useState(null)
 
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/cleaningReport.json`)
+    const base = import.meta.env.BASE_URL
+    fetch(`${base}data/cleaningReport.json`)
       .then((r) => r.json())
       .then(setReport)
       .catch(() => setReport(null))
+    fetch(`${base}data/ftcReport.json`)
+      .then((r) => r.json())
+      .then(setFtc)
+      .catch(() => setFtc(null))
   }, [])
 
   // every number on this page comes from cleaningReport.json
@@ -18,16 +24,17 @@ export default function Methodology() {
     <div className="page textPage">
       <h1>Methodology</h1>
       <p className="lede">
-        Everything on the map is built by one script that downloads public
-        data, cleans it and writes two files. The counts below are read
-        straight from that script's report, so nothing on this page is typed
-        in by hand.
+        Everything on the map is built by two scripts, one for each program
+        type, that download public data, clean it and write a data file and a
+        report. The counts below are read straight from those reports, so
+        nothing on this page is typed in by hand.
       </p>
 
       {report && (
         <section>
           <h2>Counts from the current build</h2>
           <table className="numTable">
+            <caption>FIRST Robotics Competition (FRC)</caption>
             <tbody>
               <tr><th scope="row">Build date</th><td>{report.buildDate}</td></tr>
               <tr><th scope="row">Teams downloaded from The Blue Alliance</th><td>{n(report.rawTeams)}</td></tr>
@@ -44,6 +51,25 @@ export default function Methodology() {
               <tr><th scope="row">Gazetteer file year</th><td>{report.gazetteerYear}</td></tr>
             </tbody>
           </table>
+          {ftc && (
+            <table className="numTable">
+              <caption>FIRST Tech Challenge (FTC)</caption>
+              <tbody>
+                <tr><th scope="row">Build date</th><td>{ftc.buildDate}</td></tr>
+                <tr><th scope="row">US teams downloaded from FTCScout</th><td>{n(ftc.rawTeams)}</td></tr>
+                <tr><th scope="row">Teams kept</th><td>{ftc.seasonKept}</td></tr>
+                <tr><th scope="row">Rows dropped</th><td>{n(ftc.dropped.total)}</td></tr>
+                <tr><th scope="row">Dropped, outside the United States</th><td>{n(ftc.dropped.outsideUs)}</td></tr>
+                <tr><th scope="row">Dropped, no usable state code</th><td>{n(ftc.dropped.noUsableStateCode)}</td></tr>
+                <tr><th scope="row">Dropped, did not compete in the last season</th><td>{n(ftc.dropped.notActive)}</td></tr>
+                <tr><th scope="row">Dropped, city not found in the Census gazetteer</th><td>{n(ftc.dropped.cityNotFound)}</td></tr>
+                <tr><th scope="row">Duplicate team numbers removed</th><td>{n(ftc.duplicatesRemoved)}</td></tr>
+                <tr><th scope="row">Programs on the map</th><td>{n(ftc.finalPrograms)}</td></tr>
+                <tr><th scope="row">Placed at a city center</th><td>{n(ftc.geocodedCityCenter)}</td></tr>
+                <tr><th scope="row">Joined to demographic data</th><td>{n(ftc.withDemographics)} ({ftc.withDemographicsPct}%)</td></tr>
+              </tbody>
+            </table>
+          )}
         </section>
       )}
 
@@ -54,10 +80,20 @@ export default function Methodology() {
             <strong>Program locations.</strong>{' '}
             <a href="https://www.thebluealliance.com/apidocs/v3" target="_blank" rel="noreferrer">
               The Blue Alliance API version 3
-            </a>
-            . We request every page of the team list and keep the team number,
-            nickname, school name, city, state, country, postal code, latitude,
-            longitude and rookie year.
+            <span className="srOnly"> (opens in a new tab)</span></a>
+            , for FIRST Robotics Competition teams. We request every page of
+            the team list and keep the team number, nickname, school name,
+            city, state, country, postal code, latitude, longitude and rookie
+            year.
+          </li>
+          <li>
+            <strong>FIRST Tech Challenge locations.</strong>{' '}
+            <a href="https://ftcscout.org/api" target="_blank" rel="noreferrer">
+              The FTCScout public API<span className="srOnly"> (opens in a new tab)</span></a>
+            , a community site that republishes the official FTC team list. It
+            needs no key. We keep the team number, name, school or
+            organization, city, state, country, rookie year and the seasons
+            each team competed in. FTCScout does not publish ZIP codes.
           </li>
           <li>
             <strong>Demographics.</strong>{' '}
@@ -67,7 +103,7 @@ export default function Methodology() {
               rel="noreferrer"
             >
               American Community Survey 5-year estimates
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             {report ? `, ${report.acsYear}` : ''}, at the ZIP Code Tabulation
             Area level. We use total population (B01003), median household
             income (B19013), poverty status (B17001) and race and Hispanic
@@ -84,15 +120,17 @@ export default function Methodology() {
               rel="noreferrer"
             >
               Census ZCTA Gazetteer file
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             {report ? `, ${report.gazetteerYear}` : ''}. We use the internal
-            point that the Census publishes for each ZIP area.
+            point that the Census publishes for each ZIP area, and for FTC
+            teams the place and county subdivision files, which give a center
+            point for every city, town and village.
           </li>
           <li>
             <strong>Base map.</strong> Tiles from{' '}
             <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">
               OpenStreetMap contributors
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             .
           </li>
         </ul>
@@ -131,6 +169,35 @@ export default function Methodology() {
       </section>
 
       <section>
+        <h2>How we collected and cleaned the FTC data</h2>
+        <ol>
+          <li>Download every United States team from FTCScout.</li>
+          <li>
+            FTCScout lists every team under the current season, including teams
+            that have not come back. We keep{' '}
+            {ftc ? ftc.seasonKept : 'teams that competed last season'} so the
+            map reflects teams that are actually running.
+          </li>
+          <li>
+            Turn the state field into a two letter code, keeping the 50 states
+            and Washington, D.C.
+          </li>
+          <li>
+            Match the team's city and state to a Census place, such as a city
+            or village. If there is no match we try the county subdivision
+            file, which covers New England towns and townships. Names are
+            matched without suffixes like "city" or "town", and "St." is read
+            as "Saint". Teams whose city we cannot match, usually a
+            neighborhood name like Sherman Oaks, are dropped and counted above.
+          </li>
+          <li>
+            Find the ZIP area whose center is closest to that city center, and
+            attach that ZIP area's ACS estimates.
+          </li>
+        </ol>
+      </section>
+
+      <section>
         <h2>How we placed each program on the map</h2>
         <p>
           If The Blue Alliance gives latitude and longitude for a team we use
@@ -138,8 +205,14 @@ export default function Methodology() {
           team's ZIP in the Census gazetteer and use the center point the
           Census publishes for that ZIP area. Those programs are marked as
           approximate and the popup says so. In this build The Blue Alliance
-          returned no coordinates for any team, so every program on the map is
-          placed at a ZIP area center.
+          returned no coordinates for any team, so every FRC program on the
+          map is placed at a ZIP area center.
+        </p>
+        <p>
+          FTC teams have no ZIP or coordinates in our source, so each one is
+          placed at the center point of its city and marked as approximate.
+          Several teams in the same city share one point, and the map groups
+          them until you zoom in.
         </p>
       </section>
 
@@ -177,13 +250,19 @@ export default function Methodology() {
             cities and ZIPs can be wrong, out of date or missing.
           </li>
           <li>
-            Only FIRST Robotics Competition is included so far. PLTW has no
+            FTC teams are matched to the ZIP area nearest their city center.
+            In a large city that ZIP area may be far from the team, so treat
+            FTC demographics as a rough picture of the city, not the
+            neighborhood.
+          </li>
+          <li>
+            Only FRC and FTC are included so far. PLTW has no
             bulk download from its School Locator, so it still needs a
             legitimate way to collect the data and is not in the map.
           </li>
           <li>
-            Every location in this build is a ZIP area center, so markers sit
-            near a program rather than on it.
+            Every location in this build is a ZIP area or city center, so
+            markers sit near a program rather than on it.
           </li>
           <li>
             ACS figures are survey estimates with margins of error. Small ZIP
@@ -213,10 +292,12 @@ export default function Methodology() {
       <section>
         <h2>Rebuilding the data</h2>
         <p>
-          The script is <code>scripts/buildData.mjs</code> in our repository. It
-          needs a free Blue Alliance read API key in a local <code>.env</code>{' '}
-          file and writes <code>programs.json</code> and{' '}
-          <code>cleaningReport.json</code>. Keys are never committed.
+          The FRC script is <code>scripts/buildData.mjs</code> in our
+          repository. It needs a free Blue Alliance read API key in a local{' '}
+          <code>.env</code> file and writes <code>programs.json</code> and{' '}
+          <code>cleaningReport.json</code>. Keys are never committed. The FTC
+          script is <code>scripts/buildFtc.mjs</code>. It needs no key and
+          writes <code>ftcPrograms.json</code> and <code>ftcReport.json</code>.
         </p>
       </section>
     </div>

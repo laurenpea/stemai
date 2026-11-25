@@ -7,13 +7,16 @@ more or fewer programs.
 
 **Live site: https://laurenpea.github.io/stemai/**
 
-Right now the map includes FIRST Robotics Competition teams only. Project Lead
-The Way and other program types are planned and are not in the map yet.
+Right now the map includes FIRST Robotics Competition (FRC) and FIRST Tech
+Challenge (FTC) teams. Project Lead The Way and other program types are planned
+and are not in the map yet.
 
 ## Pages
 
 - **Map** - every program as a marker, with filters for state, median household
-  income and program type, plus a popup with the ZIP area demographics
+  income and program type, plus a popup with the ZIP area demographics. The
+  same programs are listed in a table under the map for screen reader and
+  keyboard users
 - **Research** - summaries of published research on early STEM exposure and
   access, each one linked to its source
 - **Context** - the problem, the programs, and the resources that already exist
@@ -31,11 +34,14 @@ npm run dev
 
 ## Rebuilding the data
 
-The site reads two static files, `public/data/programs.json` and
-`public/data/cleaningReport.json`. Both are committed, so the site and CI build
-without any API keys.
+The site reads static files in `public/data`: `programs.json` and
+`cleaningReport.json` for FRC, and `ftcPrograms.json` and `ftcReport.json` for
+FTC. All are committed, so the site and CI build without any API keys.
 
-To rebuild them:
+FTC data comes from the FTCScout public API and needs no key:
+`npm run data:ftc`.
+
+To rebuild the FRC data:
 
 1. Get a free read API key from
    [The Blue Alliance account page](https://www.thebluealliance.com/account).
@@ -43,7 +49,7 @@ To rebuild them:
    ```
    TBA_KEY=your_key_here
    ```
-3. Run `npm run data`.
+3. Run `npm run data:frc` (or `npm run data` to rebuild FRC and FTC).
 4. Run `npm run checkdata` to verify the result.
 
 `.env` is in `.gitignore`, so keys are never committed.
@@ -68,3 +74,15 @@ script is quick.
 Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and
 publishes it to GitHub Pages. Pages must be set to build from GitHub Actions in
 the repository settings.
+
+## Accessibility
+
+- Skip link, a page title per route, and focus moves to the page heading on
+  navigation so screen readers announce the new page
+- Map markers and cluster bubbles have spoken names and are reachable by
+  keyboard; focus moves into a popup when it opens and back to the marker
+  when it closes
+- Every program on the map is also in a paginated data table
+- Program types differ by shape as well as color (Okabe-Ito palette)
+- Colors are defined in `src/tokens.css`, with the checked contrast ratio
+  next to each one
