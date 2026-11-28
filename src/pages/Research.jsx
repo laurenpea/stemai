@@ -34,7 +34,7 @@ export default function Research() {
             Science, volume 312, pages 1143 to 1144.{' '}
             <a href="https://doi.org/10.1126/science.1128690" target="_blank" rel="noreferrer">
               doi.org/10.1126/science.1128690
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
           </p>
         </article>
 
@@ -55,7 +55,7 @@ export default function Research() {
             pages 669 to 685.{' '}
             <a href="https://doi.org/10.1080/09500690902792385" target="_blank" rel="noreferrer">
               doi.org/10.1080/09500690902792385
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
           </p>
         </article>
       </section>
@@ -87,11 +87,11 @@ export default function Research() {
               rel="noreferrer"
             >
               Final report (PDF)
-            </a>{' '}
+            <span className="srOnly"> (opens in a new tab)</span></a>{' '}
             and{' '}
             <a href="https://www.firstinspires.org/about/impact" target="_blank" rel="noreferrer">
               the FIRST impact page
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
             .
           </p>
         </article>
@@ -116,7 +116,7 @@ export default function Research() {
           <p className="cite">
             <a href="https://civilrightsdata.ed.gov/" target="_blank" rel="noreferrer">
               civilrightsdata.ed.gov
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
           </p>
         </article>
 
@@ -143,7 +143,7 @@ export default function Research() {
               rel="noreferrer"
             >
               learningpolicyinstitute.org
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
           </p>
         </article>
 
@@ -168,7 +168,7 @@ export default function Research() {
             Report NSB-2023-31.{' '}
             <a href="https://ncses.nsf.gov/pubs/nsb202331" target="_blank" rel="noreferrer">
               ncses.nsf.gov
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
           </p>
         </article>
       </section>
@@ -204,7 +204,7 @@ export default function Research() {
               rel="noreferrer"
             >
               Full report (PDF)
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
           </p>
         </article>
 
@@ -234,7 +234,7 @@ export default function Research() {
               rel="noreferrer"
             >
               Full report (PDF)
-            </a>{' '}
+            <span className="srOnly"> (opens in a new tab)</span></a>{' '}
             and{' '}
             <a
               href="https://afterschoolalliance.org/documents/AA3PM-2025/AA3PM-Afterschool-STEM-Takes-Off-Executive-Summary-2026.pdf"
@@ -242,7 +242,7 @@ export default function Research() {
               rel="noreferrer"
             >
               executive summary (PDF)
-            </a>
+            <span className="srOnly"> (opens in a new tab)</span></a>
           </p>
         </article>
       </section>

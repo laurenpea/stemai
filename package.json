@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "data": "node scripts/buildData.mjs",
+    "data": "node scripts/buildData.mjs && node scripts/buildFtc.mjs",
+    "data:frc": "node scripts/buildData.mjs",
+    "data:ftc": "node scripts/buildFtc.mjs",
     "checkdata": "node scripts/checkData.mjs"
   },
   "dependencies": {
